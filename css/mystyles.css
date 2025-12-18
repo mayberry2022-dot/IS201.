@@ -1,0 +1,31 @@
+
+body {
+    background-color:#F5E7DE;
+    color: #271106;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.full-width-image {
+    width: 100%;   /* Image stretches to the full width of its container */
+    height: auto;  /* Keeps the aspect ratio correct */
+    display: block; /* Removes default inline spacing */
+}
+
+a {
+    color: #a88674;
+}
+
+a:hover{
+    text-decoration:solid;
+}
+
+.nav {
+    background: white;
+    color: white; /* Text color */
+    text-align: right; /* Center headings and paragraph */
+    padding: 30px 50px; /* Top/bottom 60px, left/right 20px */
+    border-bottom: 5px solid #ffffff33; /* subtle bottom border */
+    font-family: 'Trebuchet MS', Helvetica, sans-serif; /* Clean readable font */
+}
+
+

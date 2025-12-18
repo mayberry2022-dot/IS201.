@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Snake</title>
+  <style>
+    body { background:#222; display:flex; flex-direction:column; justify-content:center; align-items:center; height:80vh; }
+    canvas { background:#000; margin-bottom:10px; }
+    button { padding:8px 16px; font-size:16px; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <canvas id="c" width="400" height="400"></canvas>
+  <button id="startBtn">Start Game</button>
+  <script>
+    const ctx = c.getContext('2d'), box=20;
+    let snake, dir, food, score, game;
+
+    document.addEventListener('keydown', e=>{
+      if(e.key==='ArrowUp'&&dir!=='DOWN')dir='UP';
+      if(e.key==='ArrowDown'&&dir!=='UP')dir='DOWN';
+      if(e.key==='ArrowLeft'&&dir!=='RIGHT')dir='LEFT';
+      if(e.key==='ArrowRight'&&dir!=='LEFT')dir='RIGHT';
+    });
+
+    function rand(){return {x:Math.floor(Math.random()*20)*box,y:Math.floor(Math.random()*20)*box};}
+    function collide(h){return snake.some(s=>s!==h&&s.x===h.x&&s.y===h.y);}
+    function draw(){
+      ctx.fillStyle='#000'; ctx.fillRect(0,0,400,400);
+      snake.forEach((s,i)=>{ctx.fillStyle=i?'green':'lime';ctx.fillRect(s.x,s.y,box,box);});
+      ctx.fillStyle='red'; ctx.fillRect(food.x,food.y,box,box);
+      let h={...snake[0]};
+      if(dir==='LEFT')h.x-=box; if(dir==='RIGHT')h.x+=box;
+      if(dir==='UP')h.y-=box; if(dir==='DOWN')h.y+=box;
+      if(h.x===food.x&&h.y===food.y){score++;food=rand();}else snake.pop();
+      snake.unshift(h);
+      if(h.x<0||h.x>400||h.y<0||h.y>400||collide(h)){
+        clearInterval(game);
+        alert('Game Over! Score: '+ score);
+      }
+    }
+
+    function startGame(){
+      snake=[{x:160,y:160}]; dir='RIGHT'; food=rand();score=0;
+      if(game) clearInterval(game);
+      game=setInterval(draw,150); // slower speed
+    }
+
+    startBtn.addEventListener('click', startGame);
+  </script>
+</body>
+</html>
+
